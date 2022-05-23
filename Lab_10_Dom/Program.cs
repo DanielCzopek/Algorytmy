@@ -135,8 +135,17 @@ namespace lab_10_task
                 return;
             }
             action.Invoke(node);
-            PreOrder(node.Left action);
-            PreOrder(node.Right, action);
+            if (node.Children == null || node.Children.Count == 0)
+            {
+                return;
+            }
+
+            foreach (Node<T> x in node.Children)
+            {
+                PreOrder(x, action);
+            }
+
+
         }
 
         //Zadanie 2
@@ -153,8 +162,7 @@ namespace lab_10_task
                 return;
             }
 
-            PostOrder(node.Left, action);
-            PostOrder(node.Right, action);
+           
             action.Invoke(node);
         }
 
@@ -206,6 +214,7 @@ namespace lab_10_task
         //Zadanie 3
         //Zaimplementuj metodę, która obliczy rozmiar wszystkich plików w drzewie plików.
         //Wykorzystaj jedną z metod przeglądania drzewa z klasy Tree
+        
         public int GetSize()
         {
             throw new NotImplementedException();
@@ -219,7 +228,21 @@ namespace lab_10_task
         // Pamiętaj, że GetPath zwraca elementy ściezki w odwróconej kolejności!
         public List<string> GetAbsolutePaths()
         {
-            throw new NotImplementedException();
+            List<File[]> plik = GetPaths();
+            List<string> scieszki = new List<string>();
+            for (int i = 0; i < plik.Count; i++)
+            {
+                string scieszka = "";
+                for (int j = plik[i].Length - 1; j >= 0; j--)
+                {
+                    scieszka += plik[i][j].Name;
+                    if (j != 0) scieszka += ":";
+                }
+                scieszki.Add(scieszka);
+            }
+            return scieszki;
         }
+
+
     }
 }
