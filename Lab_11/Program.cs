@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Lab_11
@@ -6,7 +7,7 @@ namespace Lab_11
     interface Igraph
     {
         bool AddDirectoryEdge(int source, int target, int weight);
-        bool AddUndirectoryEdge(int source, int target, int weight);
+        bool AddUndirectedEdge(int source, int target, int weight);
         void Traversal(int start, Action<int> action);
     }
     class AdMatrixGraph : Igraph
@@ -32,7 +33,7 @@ namespace Lab_11
             }
         }
 
-        public bool AddUndirectoryEdge(int source, int target, int weight)
+        public bool AddUndirectedEdge(int source, int target, int weight)
         {
             return AddDirectoryEdge(source, target, weight) && AddDirectoryEdge(target, source, weight);
         }
@@ -61,14 +62,68 @@ namespace Lab_11
             return sb.ToString();
         }
     }
+
+    /////////////////////////////////////////
+    ///
+    record Edge
+    {
+        public int Target { get; set; }
+        public int Weight { get; set; }
+    }
+    class AddListGraph : Igraph
+    {
+        private Dictionary<int, HashSet<Edge>> edges = new Dictionary<int, HashSet<Edge>>();
+
+
+        public bool AddDirectoryEdge(int source, int target, int weight)
+        {
+            if (!edges.ContainsKey(source))
+            {
+                edges.Add(source, new HashSet<Edge>());
+            }
+            if (!edges.ContainsKey(target))
+            {
+                edges.Add(target, new HashSet<Edge>());
+            }
+            edges[source].Add(new Edge() { Target = target, Weight = weight });
+            return true;
+        }
+
+        public bool AddUndirectedEdge(int source, int target, int weight)
+        {
+            return AddDirectoryEdge(source, target, weight) && AddDirectoryEdge(target, source, weight);
+        }
+
+        public void Traversal(int start, Action<int> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in edges)
+            {
+                sb.Append($"wierzchołek { item.Key} ma krawędzie z: ");
+                foreach(var edge in item.Value)
+                {
+                    sb.Append($"{edge.Target} ({edge.Weight}) ");
+                }
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
+    }
     class Program
     {
         static void Main(string[] args)
         {
-            Igraph graph = new AdMatrixGraph(4);
+            Igraph graph = new AddListGraph();
             graph.AddDirectoryEdge(0, 1, 3);
             graph.AddDirectoryEdge(1, 2, 2);
-            graph.AddDirectoryEdge(2, 0, 8);
+            graph.AddUndirectedEdge(2, 0, 8);
             graph.AddDirectoryEdge(3, 3, 1);
             Console.WriteLine(graph.ToString());
 
