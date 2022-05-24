@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace lab_6
+namespace Lab_6
 {
     class PriorityQueue
     {
