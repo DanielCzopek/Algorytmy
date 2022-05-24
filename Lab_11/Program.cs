@@ -96,7 +96,22 @@ namespace Lab_11
 
         public void Traversal(int start, Action<int> action)
         {
-            throw new NotImplementedException();
+            Queue<int> q = new Queue<int>();
+            HashSet<int> visited = new HashSet<int>();
+            q.Enqueue(start);
+            while(q.Count > 0)
+            {
+                int node = q.Dequeue();
+                if (visited.Contains(node))
+                    continue;
+                action.Invoke(node);
+                visited.Add(node);
+                HashSet<Edge> children = edges[node];
+                foreach(var edge in children)
+                {
+                    q.Enqueue(edge.Target);
+                }
+            }
         }
 
         public override string ToString()
@@ -124,11 +139,11 @@ namespace Lab_11
             graph.AddDirectoryEdge(0, 1, 3);
             graph.AddDirectoryEdge(1, 2, 2);
             graph.AddUndirectedEdge(2, 0, 8);
+            graph.AddUndirectedEdge(0, 3, 9);
             graph.AddDirectoryEdge(3, 3, 1);
             Console.WriteLine(graph.ToString());
-
-
-
+            graph.Traversal(0, node => Console.WriteLine(node));
+            
         }
     }
 }
