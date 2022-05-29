@@ -9,7 +9,17 @@ namespace Lab_12
     class Edge : IComparable<Edge>
     {
         public int Node { get; set; }
+        public int Node2 { get; set; }
         public double Weight { get; set; }
+
+        public Edge(int Node, int Node2, double Weight)
+        {
+            this.Node = Node;
+            this.Node2 = Node2;
+            this.Weight = Weight;
+        }
+
+       
 
         public int CompareTo(Edge other)
         {
@@ -21,7 +31,7 @@ namespace Lab_12
     {
         public Dictionary<int, List<Edge>> Edges = new Dictionary<int, List<Edge>>();
 
-        public void AddDirectedEdge(int source, int destination, double weight)
+        public void AddDirectedEdge(int source, int destination, int destination2, double weight)
         {
             if (!Edges.ContainsKey(source))
             {
@@ -31,14 +41,21 @@ namespace Lab_12
             {
                 Edges.Add(destination, new List<Edge>());
             }
-            Edges[source].Add(new Edge() { Node = destination, Weight = weight });
+            if (!Edges.ContainsKey(destination2))
+            {
+                Edges.Add(destination2, new List<Edge>());
+            }
+
+            Edges[source].Add(new Edge() { Node = destination, Node2 = destination2, Weight = weight });
         }
 
-        public void AddUndirectedEdge(int source, int destination, double weight)
+        public void AddUndirectedEdge(int source, int destination, int destination2, double weight)
         {
-            AddDirectedEdge(source, destination, weight);
-            AddDirectedEdge(destination, source, weight);
+            AddDirectedEdge(source, destination, destination2, weight);
+            AddDirectedEdge(destination, destination2, source, weight);
         }
+
+       
 
         public void BFTraversal(int start, Action<int> action)
         {
@@ -61,6 +78,8 @@ namespace Lab_12
                 }
             }
         }
+
+      
     }
 }
 
@@ -83,53 +102,40 @@ class Kruskal
             {
                 int dx = points[i].X - points[j].X;
                 int dy = points[i].Y - points[j].Y;
-                edges[index] = new Edge(i, j);
+                edges[index] = new Edge(i, j, Math.Sqrt(dx*dx + dy * dy));
                 index++;
             }
 
-        var sortEdges = edges.OrderBy(a => a.Length);
-        //definiuje istniejące zbiory, dodana krawędź nie może tworzyć cyklu
-        //cykl pojawia się, gdy obie krawędzie należą do tego samego zbioru
+        var sortEdges = edges.OrderBy(other => other.Weight);
+        
         int[] sets = new int[points.Length];
         Wynik = new Edge[points.Length - 1];
         int processedEdges = 0;
         foreach (var edge in sortEdges)
         {
-            //Znaleziono N-1 niecyklicznych krawędzi
-            //Całe drzewo rozpinające jest wyliczone
+            
             if (processedEdges == points.Length - 1)
                 break;
 
-            //Jest pięć możliwości:
-            // 0-0 nie należą do zbioru
-            // 0-X pierwszy węzeł nie należy do zbioru
-            // X-0 drugi węzeł nie należy do zbioru
-            // X-X oba węzły należą do jednego zbioru - CYKL!
-            // X-Y węzły należą do różnych zbiorów
-            // Pomijamy zatem te węzły, których zbiory się różnią
-            // Lub jedna z krawędzi (np. pierwsza, jak niżej) nie należy do zbioru
-            if (sets[edge.Point1] == 0 || sets[edge.Point1] != sets[edge.Point2])
+            if (sets[edge.Node] == 0 || sets[edge.Node] != sets[edge.Node2])
             {
                 Wynik[processedEdges] = edge;
-                Zakres += edge.Length;
+                Zakres += edge.Weight;
                 processedEdges++;
-                //Jeżeli krawędź nie należy do żadnego zbioru, pomiń
-                //Krawędź nie należy do żadnego zbioru, jeżeli oba znaczniki są równe 0
-                if (sets[edge.Point1] != 0 || sets[edge.Point2] != 0)
+
+                if (sets[edge.Node] != 0 || sets[edge.Node2] != 0)
                 {
-                    //To te zbiory będą łączone w jeden
-                    int set1 = sets[edge.Point1];
-                    int set2 = sets[edge.Point2];
-                    //Zdefiniuj nowy zbiór składający się z dwóch łączonych zbiorów
-                    //0 oznacza brak zbioru, jest pomijane na tym etapie
+
+                    int set1 = sets[edge.Node];
+                    int set2 = sets[edge.Node2];
+
                     for (int i = 0; i < points.Length; i++)
                         if (sets[i] != 0 && (sets[i] == set1 || sets[i] == set2))
                             sets[i] = processedEdges;
                 }
-                //Oznacz końce krawędzi jako element nowego zbioru
-                //To tutaj dołączane są punkty spoza oznaczonych zbiorów
-                sets[edge.Point1] = processedEdges;
-                sets[edge.Point2] = processedEdges;
+
+                sets[edge.Node] = processedEdges;
+                sets[edge.Node2] = processedEdges;
             }
         }
     }
