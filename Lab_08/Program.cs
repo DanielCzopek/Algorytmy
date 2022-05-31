@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Lab_8
 {
+    // Algorytmy szukające w drzewach
     record Student(string Name, int Ects); //  to są rekordy - klasa która ma tylko konstruktor, ma metodę to String i equalis = klasa z tym wszystkim
 
     class TreeNode<T>
