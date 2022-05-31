@@ -1,6 +1,7 @@
 ﻿using System;
 namespace Lab03
 {
+    //Algorytmy zachłanne
     class CasheRegister
     {
         private int _one, _two, _five;
