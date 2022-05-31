@@ -45,16 +45,15 @@ namespace Lab_13
             }
         }
 
-
         //czy input jest palindromem
         public static bool IsPalindrome(string input)
         {
-            string tekst = input.ToLower();
-            char[] litery = tekst.ToCharArray(0, tekst.Length);
-            int j = litery.Length - 1;
-            for (int i = 0; i < litery.Length; i++)
+            string text = input.ToLower();
+            char[] letters = text.ToCharArray(0, text.Length);
+            int j = letters.Length - 1;
+            for (int i = 0; i < letters.Length; i++)
             {
-                if (litery[i] != litery[j])
+                if (letters[i] != letters[j])
                 {
                     return false;
                 }
@@ -73,18 +72,18 @@ namespace Lab_13
                 return true;
 
             Dictionary<char, int> pool = new Dictionary<char, int>();
-            foreach (char element in a.ToCharArray()) //fill the dictionary with that available chars and count them up
+            foreach (char elemens in a.ToCharArray())
             {
-                if (pool.ContainsKey(element))
-                    pool[element]++;
+                if (pool.ContainsKey(elemens))
+                    pool[elemens]++;
                 else
-                    pool.Add(element, 1);
+                    pool.Add(elemens, 1);
             }
-            foreach (char element in b.ToCharArray()) //take them out again
+            foreach (char element in b.ToCharArray())
             {
-                if (!pool.ContainsKey(element)) //if a char isn't there at all; we're out
+                if (!pool.ContainsKey(element))
                     return false;
-                if (--pool[element] == 0) //if a count is less than zero after decrement; we're out
+                if (--pool[element] == 0)
                     pool.Remove(element);
             }
             return pool.Count == 0;
@@ -94,7 +93,9 @@ namespace Lab_13
         //zwróć pierwszy najdłuższy fragment złożony z powtarzających się znaków wejścia
         public static string LongestIdenticalString(string input)
         {
-            return "";
+            return new string (input.Select((c, index) => input.Substring(index).TakeWhile(e => e == c))
+                                   .OrderByDescending(e => e.Count())
+                                   .First().ToArray()); ;
         }
 
     }
