@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lab_13
 {
@@ -48,18 +49,16 @@ namespace Lab_13
         //czy input jest palindromem
         public static bool IsPalindrome(string input)
         {
-            if (String.IsNullOrEmpty(input))
-                return false;
-            input = input
-                          .Replace(" ", "")
-                          .ToLower();
-
-            int length = input.Length;
-
-            for (int i = 0; i < length / 2; i++)
+            string tekst = input.ToLower();
+            char[] litery = tekst.ToCharArray(0, tekst.Length);
+            int j = litery.Length - 1;
+            for (int i = 0; i < litery.Length; i++)
             {
-                if (input[i] != input[length - i - 1])
+                if (litery[i] != litery[j])
+                {
                     return false;
+                }
+                j--;
             }
             return true;
         }
@@ -71,7 +70,7 @@ namespace Lab_13
                 return false;
 
             if (a == b)
-                return true;//or false: Don't know whether a string counts as an anagram of itself
+                return true;
 
             Dictionary<char, int> pool = new Dictionary<char, int>();
             foreach (char element in a.ToCharArray()) //fill the dictionary with that available chars and count them up
