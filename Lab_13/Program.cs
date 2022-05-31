@@ -71,29 +71,29 @@ namespace Lab_13
             if (a == b)
                 return true;
 
-            Dictionary<char, int> pool = new Dictionary<char, int>();
-            foreach (char elemens in a.ToCharArray())
+            Dictionary<char, int> text = new Dictionary<char, int>();
+            foreach (char letters in a.ToCharArray())
             {
-                if (pool.ContainsKey(elemens))
-                    pool[elemens]++;
+                if (text.ContainsKey(letters))
+                    text[letters]++;
                 else
-                    pool.Add(elemens, 1);
+                    text.Add(letters, 1);
             }
-            foreach (char element in b.ToCharArray())
+            foreach (char Text in b.ToCharArray())
             {
-                if (!pool.ContainsKey(element))
+                if (!text.ContainsKey(Text))
                     return false;
-                if (--pool[element] == 0)
-                    pool.Remove(element);
+                if (--text[Text] == 0)
+                    text.Remove(Text);
             }
-            return pool.Count == 0;
+            return text.Count == 0;
         }
 
 
         //zwróć pierwszy najdłuższy fragment złożony z powtarzających się znaków wejścia
         public static string LongestIdenticalString(string input)
         {
-            return new string (input.Select((c, index) => input.Substring(index).TakeWhile(e => e == c))
+            return new string(input.Select((c, index) => input.Substring(index).TakeWhile(e => e == c))
                                    .OrderByDescending(e => e.Count())
                                    .First().ToArray()); ;
         }
