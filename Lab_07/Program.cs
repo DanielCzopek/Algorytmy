@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace Lab_7
 {
+    // Budowa drzewa i stosu 
     class Node<T>
     {
         public T Value { get; set; }
