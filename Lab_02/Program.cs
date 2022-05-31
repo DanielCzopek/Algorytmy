@@ -1,6 +1,7 @@
 ﻿using System;
 namespace Lab_2
 {
+    // rekurencja i dziel i zwyciężaj
     class Program
     {
         static void Main(string[] args)
