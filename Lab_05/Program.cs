@@ -4,6 +4,7 @@ using Microsoft.VisualBasic;
 using System;
 using System.Linq;
 
+// Sortowanie MergeSort, HexPositionSort
 class App
 {
     public static void Main(string[] args)
