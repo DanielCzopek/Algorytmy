@@ -6,6 +6,7 @@ using System.Drawing;
 
 namespace Lab_12
 {
+    // Kruskal, klasa graph
     class Edge : IComparable<Edge>
     {
         public int Node { get; set; }
