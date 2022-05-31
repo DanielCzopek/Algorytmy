@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 class Program
 {
+    //Tablice hashujące, hash map 
     public static void Main(string[] args)
     {
         HashMap<string, int> map1 = new HashMap<string, int>();
