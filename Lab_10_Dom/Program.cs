@@ -4,6 +4,7 @@ using System.Threading.Channels;
 
 namespace lab_10_task
 {
+    // metody przechodzenia po drzewie
     public class Program
     {
         public static void Main(string[] args)
