@@ -2,6 +2,7 @@
 
 namespace Zad_04
 {
+    // algorytmy sortowanie QucikSort
     class Program
     {
         static void Main(string[] args)
