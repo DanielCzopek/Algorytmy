@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Lab_9
 {
+    // Tablice Hashujące
     class HashTable<T> : IEnumerable<T>
     {
 
