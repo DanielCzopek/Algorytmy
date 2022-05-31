@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Lab_10
 {
+    // Metody przechodzenia po drzewie
     class Node<T>
     {
         public T Value { get; set; }
