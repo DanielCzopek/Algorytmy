@@ -1,6 +1,7 @@
 ﻿using System;
 namespace Zad_1
 {
+    // przesukiwanie tablic
     class Program
     {
         static void Main(string[] args)
