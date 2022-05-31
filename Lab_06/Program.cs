@@ -2,6 +2,8 @@
 
 namespace Lab_6
 {
+    // Kolejka priorytetowa
+
     class PriorityQueue
     {
         public readonly static int Capacity = 5;
