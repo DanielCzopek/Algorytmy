@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Lab_11
 {
+    // grafy
     interface Igraph
     {
         bool AddDirectoryEdge(int source, int target, int weight);
