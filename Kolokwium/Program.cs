@@ -1,10 +1,11 @@
 ﻿using System.Data;
+using System.Text;
 
 class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Daniel Czopek 13619 grupa 1");
+        Console.WriteLine("Daniel Czopek 13619 Lab 1");
 
         int points = 0;
         points += Test(() =>
@@ -141,7 +142,7 @@ class Program
     {
         char[] ch = input.ToCharArray();
         HashSet<char> chr = new HashSet<char>();
-        string longest = "";
+        StringBuilder longest = new StringBuilder("");
         if (input.All(char.IsDigit))
             return "";
         
@@ -153,14 +154,15 @@ class Program
             if (!chr.Add(ch[i]))
             {
                 if (chr.Count > longest.Length)
-                    longest = new String(chr.ToArray());
+                    longest.Append(chr.ToArray());
                 chr.Clear();
             }
         }
-        ch = longest.ToCharArray();
+        ch = Convert.ToString(longest).ToCharArray();
         Array.Sort(ch);
         return new String(ch);
     }
+
 
     /**
      * Zadanie 2 (1 pkt.)
@@ -223,8 +225,7 @@ class Program
          * Zaimplementuj metodę usuwania ze stosu
          */
         public T Pop()
-        {
-            
+        { 
             T value = Node.Value;
             Node = Node.Next;
             return value;
