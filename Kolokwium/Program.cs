@@ -4,6 +4,8 @@ class Program
 {
     public static void Main(string[] args)
     {
+        Console.WriteLine("Daniel Czopek 13619 grupa 1");
+
         int points = 0;
         points += Test(() =>
         {
@@ -137,20 +139,22 @@ class Program
      */
     public static string Zadanie1(string input)
     {
+        char[] ch = input.ToCharArray();
+        HashSet<char> chr = new HashSet<char>();
+        string longest = "";
         if (input.All(char.IsDigit))
             return "";
-        char[] ch = input.ToCharArray();
-        HashSet<char> @char = new HashSet<char>();
-        string longest = "";
+        
         for (int i = 0; i < ch.Length; i++)
         {
             if (char.IsLetter(ch[i]))
                 continue;
-            if (!@char.Add(ch[i]))
+
+            if (!chr.Add(ch[i]))
             {
-                if (@char.Count > longest.Length)
-                    longest = new String(@char.ToArray());
-                @char.Clear();
+                if (chr.Count > longest.Length)
+                    longest = new String(chr.ToArray());
+                chr.Clear();
             }
         }
         ch = longest.ToCharArray();
@@ -176,11 +180,11 @@ class Program
      */
     public static bool Zadanie2(int input)
     {
-        char[] nums = input.ToString().ToCharArray();
-        Array.Sort(nums);
-        for (int i = 1; i < nums.Length; i++)
+        char[] number = input.ToString().ToCharArray();
+        Array.Sort(number);
+        for (int i = 1; i < number.Length; i++)
         {
-            if (nums[i - 1] == nums[i])
+            if (number[i - 1] == number[i])
                 return false;
         }
 
@@ -200,19 +204,19 @@ class Program
 
     class StackTest<T>
     {
-        private NodeTest<T> _head;
+        private NodeTest<T> Node;
 
         public void Push(T value)
         {
-            NodeTest<T> nodeTest = new NodeTest<T>() { Value = value };
+            NodeTest<T> Test = new NodeTest<T>() { Value = value };
             if (isEmpty())
             {
-                _head = nodeTest;
+                Node = Test;
                 return;
             }
 
-            nodeTest.Next = _head;
-            _head = nodeTest;
+            Test.Next = Node;
+            Node = Test;
         }
 
         /**
@@ -221,14 +225,14 @@ class Program
         public T Pop()
         {
             
-            T val = _head.Value;
-            _head = _head.Next;
-            return val;
+            T value = Node.Value;
+            Node = Node.Next;
+            return value;
         }
 
         public bool isEmpty()
         {
-            return _head == null;
+            return Node == null;
         }
     }
 
@@ -296,9 +300,9 @@ class Program
     {
         private int[,] _matrix;
 
-        public TestGraph(int n)
+        public TestGraph(int x)
         {
-            _matrix = new int[n, n];
+            _matrix = new int[x, x];
         }
 
         public bool AddDirectedEdge(int source, int target)
@@ -319,12 +323,12 @@ class Program
 
         public ISet<int> Neighbors(int node)
         {
-            HashSet<int> ints = new HashSet<int>();
-            for (int col = 0; col < _matrix.GetLength(1); col++)
-                if (_matrix[node, col] == 1)
-                    ints.Add(col);
+            HashSet<int> hash = new HashSet<int>();
+            for (int y = 0; y < _matrix.GetLength(1); y++)
+                if (_matrix[node, y] == 1)
+                    hash.Add(y);
 
-            return ints;
+            return hash;
         }
     }
 
